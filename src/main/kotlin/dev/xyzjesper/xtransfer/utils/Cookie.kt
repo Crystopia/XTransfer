@@ -1,13 +1,12 @@
-﻿package dev.jesforge.transferpacket.utils
+﻿package dev.xyzjesper.xtransfer.utils
 
-import dev.jesforge.transferpacket.TransferPacketPlugin
+import dev.xyzjesper.xtransfer.XTransferPlugin
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
-import org.bukkit.persistence.PersistentDataType
 
 object Cookie {
 
-    var namespacedKeyForJoin = NamespacedKey(TransferPacketPlugin.instance, "joinKey")
+    var namespacedKeyForJoin = NamespacedKey(XTransferPlugin.instance, "joinKey")
 
     fun storeCookie(cookie: String, player: Player) {
         val cookieBytes = cookie.toByteArray(Charsets.UTF_8)

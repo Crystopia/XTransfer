@@ -37,15 +37,15 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     // Paper
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:$mcVersion-R0.1-SNAPSHOT")
 
     // Twilight
     implementation("gg.flyte:twilight:${twilightVersion}")
 
     // Command API
-    compileOnly("dev.jorel:commandapi-bukkit-core:${commandAPIVersion}")
-    implementation("dev.jorel:commandapi-bukkit-shade-mojang-mapped:${commandAPIVersion}")
-    implementation("dev.jorel:commandapi-bukkit-kotlin:${commandAPIVersion}")
+    compileOnly("dev.jorel:commandapi-paper-core:$commandAPIVersion")
+    implementation("dev.jorel:commandapi-paper-shade:$commandAPIVersion")
+    implementation("dev.jorel:commandapi-kotlin-paper:$commandAPIVersion")
 }
 
 kotlin {
@@ -79,7 +79,7 @@ publishing {
     publications {
         create<MavenPublication>("reposilite") {
             from(components["java"])
-            artifactId = "transferpacket"
+            artifactId = "xtransfer"
             groupId = groupID
             version = projectVersion
         }
@@ -88,10 +88,10 @@ publishing {
 
 paper {
     name = projectName
-    version = version
+    version = projectVersion
     description = projectDescription
     main = mainClass
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
-    authors = listOf("jesforge")
+    authors = listOf("xyzjesper")
     apiVersion = "1.21"
 }

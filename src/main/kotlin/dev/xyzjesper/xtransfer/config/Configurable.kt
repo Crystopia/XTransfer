@@ -1,4 +1,4 @@
-package dev.jesforge.transferpacket.config
+package dev.xyzjesper.xtransfer.config
 
 interface Configurable {
     fun save()

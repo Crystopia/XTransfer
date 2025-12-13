@@ -1,7 +1,6 @@
-package dev.jesforge.transferpacket.config
+package dev.xyzjesper.xtransfer.config
 
 import kotlinx.serialization.Serializable
-import org.bukkit.entity.Player
 
 @Serializable
 data class SettingsData(

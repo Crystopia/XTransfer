@@ -1,4 +1,4 @@
-package dev.jesforge.transferpacket.config
+package dev.xyzjesper.xtransfer.config
 
 import kotlinx.serialization.encodeToString
 import java.io.File

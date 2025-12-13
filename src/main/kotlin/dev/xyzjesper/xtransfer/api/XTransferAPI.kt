@@ -1,10 +1,10 @@
-﻿package dev.jesforge.transferpacket.api
+﻿package dev.xyzjesper.xtransfer.api
 
-import dev.jesforge.transferpacket.config.ConfigManager
-import dev.jesforge.transferpacket.utils.Cookie
+import dev.xyzjesper.xtransfer.config.ConfigManager
+import dev.xyzjesper.xtransfer.utils.Cookie
 import org.bukkit.entity.Player
 
-object TransferPacketAPI {
+object XTransferAPI {
 
     fun addPlayerUuidToList(playerUuid: String) {
         ConfigManager.settings.whitelistedPlayerUUIDs.add(playerUuid)

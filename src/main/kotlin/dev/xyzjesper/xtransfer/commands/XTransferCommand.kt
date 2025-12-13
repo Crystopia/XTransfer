@@ -1,19 +1,20 @@
-﻿package dev.jesforge.transferpacket.commands
+﻿package dev.xyzjesper.xtransfer.commands
 
-import dev.jesforge.transferpacket.config.ConfigManager
-import dev.jesforge.transferpacket.packets.TransferUtils
+import dev.xyzjesper.xtransfer.config.ConfigManager
+import dev.xyzjesper.xtransfer.packets.TransferUtils
 import dev.jorel.commandapi.executors.CommandExecutor
 import dev.jorel.commandapi.kotlindsl.*
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.entity.Player
+import java.lang.Exception
 
-object TransferPacketCommand {
+object XTransferCommand {
     val mm = MiniMessage.miniMessage()
 
-    val command = commandTree(ConfigManager.settings.commandName, "transferpacket") {
-        withPermission("transferpacket.command.${ConfigManager.settings.commandName}")
+    val command = commandTree(ConfigManager.settings.commandName, "xtransfer") {
+        withPermission("xtransfer.command.${ConfigManager.settings.commandName}")
         literalArgument("transfer") {
-            withPermission("transferpacket.command.${ConfigManager.settings.commandName}.transfer")
+            withPermission("xtransfer.command.${ConfigManager.settings.commandName}.transfer")
             stringArgument("ip") {
                 integerArgument("port") {
                     executes(
@@ -28,23 +29,49 @@ object TransferPacketCommand {
             }
         }
         literalArgument("whitelist") {
-            withPermission("transferpacket.command.${ConfigManager.settings.commandName}.whitelist")
+            withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist")
+
+            literalArgument("list") {
+                withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.list")
+                anyExecutor { sender, arguments -> 
+                    val players = ConfigManager.settings.whitelistedPlayerUUIDs.mapIndexed { index, string -> "${index + 1}. $string" }
+                    val strings = ConfigManager.settings.whitelistString?.mapIndexed { index, string -> "${index + 1}. $string" }
+                    
+                    sender.sendMessage(mm.deserialize("""
+<color:#99ffb3>Whitelisted UUIDs:</color>
+<gray><st>---------------</st></gray>
+                        
+${if (players.isEmpty()) "No whitelist" else players.joinToString("\n")}
+                        
+<color:#99ffb3>Whitelisted Strings:</color>
+<gray><st>---------------</st></gray>
+                        
+${if (strings!!.isEmpty()) "No whitelist" else strings.joinToString("\n")}
+                        
+""".trimIndent()))
+                }
+            }
             literalArgument("player") {
-                withPermission("transferpacket.command.${ConfigManager.settings.commandName}.whitelist.player")
+                withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.player")
                 literalArgument("add") {
-                    withPermission("transferpacket.command.${ConfigManager.settings.commandName}.whitelist.player.add")
-                    offlinePlayerArgument("player") {
+                    withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.player.add")
+                    playerProfileArgument("player") {
                         executes(
                             CommandExecutor { commandSender, commandArguments ->
-                                ConfigManager.settings.whitelistedPlayerUUIDs.add((commandArguments[0] as Player).uniqueId.toString())
-                                ConfigManager.save()
-                                commandSender.sendMessage(mm.deserialize(ConfigManager.settings.messages.addedNewPlayerToList))
+                               try {
+                                   ConfigManager.settings.whitelistedPlayerUUIDs.add((commandArguments[0] as Player).uniqueId.toString())
+                                   ConfigManager.save()
+                                   commandSender.sendMessage(mm.deserialize(ConfigManager.settings.messages.addedNewPlayerToList))
+                               } catch (e: Exception) {
+                                   commandSender.sendMessage(mm.deserialize("<red>Failed to add player...</red>"))
+                                   return@CommandExecutor
+                               }
                             })
                     }
                 }
                 literalArgument("remove") {
-                    withPermission("transferpacket.command.${ConfigManager.settings.commandName}.whitelist.player.remove")
-                    offlinePlayerArgument("player") {
+                    withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.player.remove")
+                    playerProfileArgument("player") {
                         executes(
                             CommandExecutor { commandSender, commandArguments ->
                                 ConfigManager.settings.whitelistedPlayerUUIDs.remove((commandArguments[0] as Player).uniqueId.toString())
@@ -55,9 +82,9 @@ object TransferPacketCommand {
                 }
             }
             literalArgument("token") {
-                withPermission("transferpacket.command.${ConfigManager.settings.commandName}.whitelist.token")
+                withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.token")
                 literalArgument("add") {
-                    withPermission("transferpacket.command.${ConfigManager.settings.commandName}.whitelist.player.add")
+                    withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.player.add")
                     textArgument("token") {
                         executes(
                             CommandExecutor { commandSender, commandArguments ->
@@ -71,7 +98,7 @@ object TransferPacketCommand {
                     }
                 }
                 literalArgument("remove") {
-                    withPermission("transferpacket.command.${ConfigManager.settings.commandName}.whitelist.player.remove")
+                    withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.player.remove")
                     textArgument("token") {
                         executes(
                             CommandExecutor { commandSender, commandArguments ->

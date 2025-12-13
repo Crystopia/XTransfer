@@ -1,7 +1,7 @@
-﻿package dev.jesforge.transferpacket.packets
+﻿package dev.xyzjesper.xtransfer.packets
 
-import dev.jesforge.transferpacket.config.ConfigManager
-import dev.jesforge.transferpacket.utils.Cookie
+import dev.xyzjesper.xtransfer.config.ConfigManager
+import dev.xyzjesper.xtransfer.utils.Cookie
 import org.bukkit.entity.Player
 
 

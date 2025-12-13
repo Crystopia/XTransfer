@@ -1,7 +1,7 @@
-﻿package dev.jesforge.transferpacket.events
+﻿package dev.xyzjesper.xtransfer.events
 
-import dev.jesforge.transferpacket.config.ConfigManager
-import dev.jesforge.transferpacket.utils.Cookie
+import dev.xyzjesper.xtransfer.config.ConfigManager
+import dev.xyzjesper.xtransfer.utils.Cookie
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
