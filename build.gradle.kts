@@ -66,7 +66,7 @@ publishing {
     repositories {
         maven {
             name = "Reposilite"
-            url = uri("https://repo.nexocrew.com/releases")
+            url = uri("https://repo.xyzhub.link/releases")
             credentials {
                 username = System.getenv("REPOSILITE_USER") ?: System.getProperty("REPOSILITE_USER") ?: "USERNAME"
                 password = System.getenv("REPOSILITE_TOKEN") ?: System.getProperty("REPOSILITE_TOKEN") ?: "TOKEN"
