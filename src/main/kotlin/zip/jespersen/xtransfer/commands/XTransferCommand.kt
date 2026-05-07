@@ -1,12 +1,12 @@
-﻿package dev.xyzjesper.xtransfer.commands
+﻿package zip.jespersen.xtransfer.commands
 
-import dev.xyzjesper.xtransfer.config.ConfigManager
-import dev.xyzjesper.xtransfer.packets.TransferUtils
+import com.destroystokyo.paper.profile.PlayerProfile
 import dev.jorel.commandapi.executors.CommandExecutor
 import dev.jorel.commandapi.kotlindsl.*
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.entity.Player
-import java.lang.Exception
+import zip.jespersen.xtransfer.config.ConfigManager
+import zip.jespersen.xtransfer.packets.TransferUtils
 
 object XTransferCommand {
     val mm = MiniMessage.miniMessage()
@@ -35,7 +35,7 @@ object XTransferCommand {
                 withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.list")
                 anyExecutor { sender, arguments -> 
                     val players = ConfigManager.settings.whitelistedPlayerUUIDs.mapIndexed { index, string -> "${index + 1}. $string" }
-                    val strings = ConfigManager.settings.whitelistString?.mapIndexed { index, string -> "${index + 1}. $string" }
+                    val string = ConfigManager.settings.whitelistString
                     
                     sender.sendMessage(mm.deserialize("""
 <color:#99ffb3>Whitelisted UUIDs:</color>
@@ -46,7 +46,7 @@ ${if (players.isEmpty()) "No whitelist" else players.joinToString("\n")}
 <color:#99ffb3>Whitelisted Strings:</color>
 <gray><st>---------------</st></gray>
                         
-${if (strings!!.isEmpty()) "No whitelist" else strings.joinToString("\n")}
+${string.ifEmpty { "No whitelist" }}
                         
 """.trimIndent()))
                 }
@@ -59,7 +59,7 @@ ${if (strings!!.isEmpty()) "No whitelist" else strings.joinToString("\n")}
                         executes(
                             CommandExecutor { commandSender, commandArguments ->
                                try {
-                                   ConfigManager.settings.whitelistedPlayerUUIDs.add((commandArguments[0] as Player).uniqueId.toString())
+                                   ConfigManager.settings.whitelistedPlayerUUIDs.add((commandArguments.args[0] as List<PlayerProfile>)[0].uniqueId.toString())
                                    ConfigManager.save()
                                    commandSender.sendMessage(mm.deserialize(ConfigManager.settings.messages.addedNewPlayerToList))
                                } catch (e: Exception) {
@@ -74,7 +74,7 @@ ${if (strings!!.isEmpty()) "No whitelist" else strings.joinToString("\n")}
                     playerProfileArgument("player") {
                         executes(
                             CommandExecutor { commandSender, commandArguments ->
-                                ConfigManager.settings.whitelistedPlayerUUIDs.remove((commandArguments[0] as Player).uniqueId.toString())
+                                ConfigManager.settings.whitelistedPlayerUUIDs.remove((commandArguments.args[0] as List<PlayerProfile>)[0].uniqueId.toString())
                                 ConfigManager.save()
                                 commandSender.sendMessage(mm.deserialize(ConfigManager.settings.messages.removePlayerFromList))
                             })
@@ -83,34 +83,18 @@ ${if (strings!!.isEmpty()) "No whitelist" else strings.joinToString("\n")}
             }
             literalArgument("token") {
                 withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.token")
-                literalArgument("add") {
                     withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.player.add")
                     textArgument("token") {
                         executes(
                             CommandExecutor { commandSender, commandArguments ->
                                 val token = commandArguments[0] as String
 
-                                ConfigManager.settings.whitelistString!!.add(token)
+                                ConfigManager.settings.whitelistString = token
                                 ConfigManager.save()
 
                                 commandSender.sendMessage(mm.deserialize(ConfigManager.settings.messages.addedNewTokenToList))
                             })
                     }
-                }
-                literalArgument("remove") {
-                    withPermission("xtransfer.command.${ConfigManager.settings.commandName}.whitelist.player.remove")
-                    textArgument("token") {
-                        executes(
-                            CommandExecutor { commandSender, commandArguments ->
-                                val token = commandArguments[0] as String
-
-                                ConfigManager.settings.whitelistString!!.remove(token)
-                                ConfigManager.save()
-
-                                commandSender.sendMessage(mm.deserialize(ConfigManager.settings.messages.removeTokenFromList))
-                            })
-                    }
-                }
             }
         }
     }

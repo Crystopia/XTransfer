@@ -1,4 +1,4 @@
-package dev.xyzjesper.xtransfer.config
+package zip.jespersen.xtransfer.config
 
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

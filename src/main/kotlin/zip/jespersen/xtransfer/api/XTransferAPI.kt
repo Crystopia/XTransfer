@@ -1,8 +1,8 @@
-﻿package dev.xyzjesper.xtransfer.api
+﻿package zip.jespersen.xtransfer.api
 
-import dev.xyzjesper.xtransfer.config.ConfigManager
-import dev.xyzjesper.xtransfer.utils.Cookie
 import org.bukkit.entity.Player
+import zip.jespersen.xtransfer.config.ConfigManager
+import zip.jespersen.xtransfer.utils.Cookie
 
 object XTransferAPI {
 
@@ -16,13 +16,12 @@ object XTransferAPI {
         ConfigManager.save()
     }
 
-    fun addTokenToList(token: String) {
-        ConfigManager.settings.whitelistString!!.add(token)
-        ConfigManager.save()
+    fun getWhitelistToken(): String {
+        return ConfigManager.settings.whitelistString
     }
 
-    fun removeTokenFromList(token: String) {
-        ConfigManager.settings.whitelistString!!.remove(token)
+    fun setWhitelistToken(token: String) {
+        ConfigManager.settings.whitelistString = token
         ConfigManager.save()
     }
 

@@ -1,12 +1,12 @@
-package dev.xyzjesper.xtransfer.config
+package zip.jespersen.xtransfer.config
 
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class SettingsData(
-    var commandName: String = "transferpacket",
+    var commandName: String = "xtransfer",
     var messages: Messages,
-    var whitelistString: MutableList<String>? = mutableListOf("yqKJNgQtoqn07hIAeh3L7jQYa"),
+    var whitelistString: String = "yqKJNgQtoqn07hIAeh3L7jQYa",
     var onlyTransferJoin: Boolean = false,
     var whitelistedPlayerUUIDs: MutableList<String> = mutableListOf(),
 )

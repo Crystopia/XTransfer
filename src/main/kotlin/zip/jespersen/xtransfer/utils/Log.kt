@@ -1,4 +1,4 @@
-﻿package dev.xyzjesper.xtransfer.utils
+﻿package zip.jespersen.xtransfer.utils
 
 import java.text.SimpleDateFormat
 import java.util.Date

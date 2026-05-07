@@ -2,11 +2,11 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 import net.minecrell.pluginyml.paper.PaperPluginDescription
 
 plugins {
-    kotlin("jvm") version "2.0.20-Beta1"
-    id("com.gradleup.shadow") version "9.0.0-beta8"
-    id("xyz.jpenilla.run-paper") version "2.3.1"
-    id("de.eldoria.plugin-yml.paper") version "0.7.0"
-    kotlin("plugin.serialization") version "2.1.0"
+    kotlin("jvm") version "2.+"
+    id("com.gradleup.shadow") version "9.+"
+    id("xyz.jpenilla.run-paper") version "2.+"
+    id("de.eldoria.plugin-yml.paper") version "0.7.+"
+    kotlin("plugin.serialization") version "2.+"
     id("maven-publish")
 }
 
@@ -37,7 +37,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     // Paper
-    compileOnly("io.papermc.paper:paper-api:$mcVersion-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:$mcVersion")
 
     // Twilight
     implementation("gg.flyte:twilight:${twilightVersion}")
@@ -49,7 +49,7 @@ dependencies {
 }
 
 kotlin {
-    jvmToolchain(22)
+    jvmToolchain(25)
 }
 
 tasks.build {
@@ -59,6 +59,7 @@ tasks.build {
 tasks {
     runServer {
         minecraftVersion(mcVersion)
+        serverJar(File("/home/xyzjesper/Dokumente/GitHub/Color-Status/run/paper-26.1.2-60.jar"))
     }
 }
 
@@ -66,7 +67,7 @@ publishing {
     repositories {
         maven {
             name = "Reposilite"
-            url = uri("https://repo.xyzhub.link/releases")
+            url = uri("https://repo.jespersen.zip/releases")
             credentials {
                 username = System.getenv("REPOSILITE_USER") ?: System.getProperty("REPOSILITE_USER") ?: "USERNAME"
                 password = System.getenv("REPOSILITE_TOKEN") ?: System.getProperty("REPOSILITE_TOKEN") ?: "TOKEN"
@@ -89,9 +90,10 @@ publishing {
 paper {
     name = projectName
     version = projectVersion
+    foliaSupported = true
     description = projectDescription
     main = mainClass
     load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
-    authors = listOf("xyzjesper")
+    authors = listOf("jespersen")
     apiVersion = "1.21"
 }

@@ -1,10 +1,10 @@
-﻿package dev.xyzjesper.xtransfer
+﻿package zip.jespersen.xtransfer
 
-import dev.xyzjesper.xtransfer.commands.XTransferCommand
-import dev.xyzjesper.xtransfer.utils.Log
+import zip.jespersen.xtransfer.commands.XTransferCommand
+import zip.jespersen.xtransfer.utils.Log
 import dev.jorel.commandapi.CommandAPI
 import dev.jorel.commandapi.CommandAPIPaperConfig
-import dev.xyzjesper.xtransfer.events.PlayerJoinEvent
+import zip.jespersen.xtransfer.events.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
 
 class XTransferPlugin : JavaPlugin() {
@@ -18,8 +18,8 @@ class XTransferPlugin : JavaPlugin() {
     }
 
     override fun onLoad() {
-        CommandAPI.onLoad(CommandAPIPaperConfig(this).verboseOutput(true))
-        Log.info("Loading Plugin...")
+        CommandAPI.onLoad(CommandAPIPaperConfig(this).verboseOutput(false).silentLogs(false))
+        Log.info("Loading Plugin XTransfer")
     }
 
     override fun onEnable() {

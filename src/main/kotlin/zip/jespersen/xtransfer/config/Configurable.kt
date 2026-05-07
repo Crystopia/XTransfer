@@ -1,4 +1,4 @@
-package dev.xyzjesper.xtransfer.config
+package zip.jespersen.xtransfer.config
 
 interface Configurable {
     fun save()
